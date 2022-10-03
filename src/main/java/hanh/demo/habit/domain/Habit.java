@@ -33,9 +33,10 @@ public class Habit {
     private Boolean isDisplay;
 
     // 일주일에 몇번 수행할것인지
-    @Size(min = 1, max = 7)
+    @Max(7)
+    @Min(1)
     @ColumnDefault("1")
-    private int count;
+    private Integer count ;
 
     @ElementCollection
     @Column(name="date_list")

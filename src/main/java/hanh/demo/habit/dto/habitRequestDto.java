@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class habitRequestDto {
+public class HabitRequestDto {
 
     private User user;
 
@@ -16,7 +16,7 @@ public class habitRequestDto {
     private int count;
 
     @Builder
-    public habitRequestDto(
+    public HabitRequestDto(
             User user,
             int count,
             String title
