@@ -2,9 +2,13 @@ package hanh.demo.habit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hanh.demo.DemoApplication;
+import hanh.demo.habit.domain.Habit;
 import hanh.demo.habit.dto.HabitRequestDto;
+import hanh.demo.habit.repository.HabitRepository;
+import hanh.demo.habit.service.HabitService;
 import hanh.demo.user.domain.User;
 import hanh.demo.user.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +39,11 @@ public class HabitControllerTest {
 
     HabitRequestDto habitRequestDto;
 
+    @Autowired
+    HabitService habitService;
+
+    @Autowired
+    HabitRepository habitRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -52,9 +61,6 @@ public class HabitControllerTest {
         User user = testUser;
 
         //when
-        /**
-         * Object를 JSON으로 변환
-         * */
         String body = mapper.writeValueAsString(
                 habitRequestDto.builder()
                         .title(title)
@@ -65,8 +71,8 @@ public class HabitControllerTest {
 
         //then
         mockMvc.perform(post("http://localhost:8080/habit")
-                        .content(body) //HTTP Body에 데이터를 담는다
-                        .contentType(MediaType.APPLICATION_JSON) //보내는 데이터의 타입을 명시
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isCreated());
     }
@@ -77,5 +83,22 @@ public class HabitControllerTest {
         mockMvc.perform(get("/habit")
                 )
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void changeStatus() throws Exception {
+
+        //when
+        Habit habit = habitRepository.findById(1L).get();
+
+        Boolean temp = habit.getIsDisplay();
+
+        //then
+        mockMvc.perform(post("/habit/1/change-status")
+                )
+                .andExpect(status().isOk());
+
+        Assertions.assertNotEquals(temp, habit.getIsDisplay());
+
     }
 }
