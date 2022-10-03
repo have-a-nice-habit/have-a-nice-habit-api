@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +31,7 @@ public class HabitController {
         if (findHabit.isPresent()){
             findHabit.get().changeStatus();
         }else{
-            throw new DataNotFoundException();
+            throw new DataNotFoundException(); // exception controller 로 빼기
         }
 
         return ResponseEntity.status(HttpStatus.OK).body("상태를 변경했습니다.");
@@ -52,6 +53,27 @@ public class HabitController {
         List<Habit> habitList = habitService.readAllHabit();
 
         return ResponseEntity.status(HttpStatus.OK).body(habitList);
+    }
+
+    @PostMapping("{habitId}/add-date")
+    public ResponseEntity addDate(@PathVariable Long habitId, Date date){
+        Optional<Habit> findHabit = habitRepository.findById(habitId);
+
+        if (findHabit.isPresent()){
+
+            List<Date> dateList = findHabit.get().getDateList();
+
+            if (!dateList.contains(date)) {
+                findHabit.get().addDate(date);
+            }
+            else{
+                dateList.remove(date);}
+        }else{
+            throw new DataNotFoundException();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(date+"의 달성 여부가 변경되었습니다");
 
     }
+
 }
