@@ -7,6 +7,7 @@ import hanh.demo.habit.dto.HabitResponseDto;
 import hanh.demo.habit.repository.HabitRepository;
 import hanh.demo.habit.service.HabitService;
 import hanh.demo.user.domain.User;
+import hanh.demo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,8 @@ public class HabitController {
 
     private final HabitService habitService;
     private final HabitRepository habitRepository;
+
+    private final UserRepository userRepository;
 
     @PostMapping("{habitId}/change-status")
     public ResponseEntity changeStatus(@PathVariable Long habitId){
@@ -51,20 +54,23 @@ public class HabitController {
 
     // 메인 화면에 띄워지는 해빗
     @GetMapping
-    public ResponseEntity readAllHabit(User user) {
+    public ResponseEntity readAllHabit(String nickname) {
 
-        List<HabitResponseDto> habitList = habitService.findAllByUser(user);
+        Optional<User> user = userRepository.findByNickname(nickname);
+
+        List<HabitResponseDto> habitList = habitService.findAllByUser(user.get());
 
         return ResponseEntity.status(HttpStatus.OK).body(habitList);
+
     }
 
     @PostMapping("{habitId}/add-date")
-    public ResponseEntity addDate(@PathVariable Long habitId, Date date){
+    public ResponseEntity addDate(@PathVariable Long habitId, String date){
         Optional<Habit> findHabit = habitRepository.findById(habitId);
 
         if (findHabit.isPresent()){
 
-            List<Date> dateList = findHabit.get().getDateList();
+            List<String> dateList = findHabit.get().getDateList();
 
             if (!dateList.contains(date)) {
                 findHabit.get().addDate(date);

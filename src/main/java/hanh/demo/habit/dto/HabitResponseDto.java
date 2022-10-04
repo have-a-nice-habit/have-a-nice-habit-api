@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -33,10 +35,12 @@ public class HabitResponseDto {
     }
 
     private boolean getIsAchieved(
-            List<Date> dateList
+            List<String> dateList
     ){
-        Date now = new Date();
-        return dateList.contains(now);
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        String dateToStr = dateFormat.format(date);
+        return dateList.contains(dateToStr);
     }
 
 }

@@ -31,7 +31,7 @@ public class HabitService {
     }
 
     public List<HabitResponseDto> findAllByUser(User user) {
-        List<HabitResponseDto> habitList = habitRepository.findAllByOwner(user)
+        List<HabitResponseDto> habitList = habitRepository.findAllByUser(user)
                 .stream().map(HabitResponseDto::new).collect(Collectors.toList());
 
         return habitList;

@@ -9,7 +9,6 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,7 +17,7 @@ import java.util.List;
 @Data
 public class Habit {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -30,7 +29,7 @@ public class Habit {
 
     @Column(name="is_display")
     @ColumnDefault("true")
-    private Boolean isDisplay;
+    private Boolean isDisplay = true;
 
     // 일주일에 몇번 수행할것인지
     @Max(7)
@@ -40,10 +39,10 @@ public class Habit {
 
     @ElementCollection
     @Column(name="date_list")
-    private List<Date> dateList = new ArrayList<>();
+    private List<String> dateList = new ArrayList<String>();
 
     // 해빗 수행 시 날짜 추가
-    public void addDate(Date date){
+    public void addDate(String date){
         this.dateList.add(date);
     }
 
