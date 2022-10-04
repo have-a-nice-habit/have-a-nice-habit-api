@@ -3,8 +3,10 @@ package hanh.demo.habit.controller;
 import hanh.demo.exception.DataNotFoundException;
 import hanh.demo.habit.domain.Habit;
 import hanh.demo.habit.dto.HabitRequestDto;
+import hanh.demo.habit.dto.HabitResponseDto;
 import hanh.demo.habit.repository.HabitRepository;
 import hanh.demo.habit.service.HabitService;
+import hanh.demo.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,10 +49,11 @@ public class HabitController {
 
     }
 
+    // 메인 화면에 띄워지는 해빗
     @GetMapping
-    public ResponseEntity readAllHabit() {
+    public ResponseEntity readAllHabit(User user) {
 
-        List<Habit> habitList = habitService.readAllHabit();
+        List<HabitResponseDto> habitList = habitService.findAllByUser(user);
 
         return ResponseEntity.status(HttpStatus.OK).body(habitList);
     }
