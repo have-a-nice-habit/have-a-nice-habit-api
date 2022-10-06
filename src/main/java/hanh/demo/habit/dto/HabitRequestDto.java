@@ -15,15 +15,19 @@ public class HabitRequestDto {
 
     private int count;
 
+    private String emoji;
+
     @Builder
     public HabitRequestDto(
             User user,
             int count,
-            String title
+            String title,
+            String emoji
     ){
         this.user = user;
         this.count = count;
         this.title = title;
+        this.emoji = emoji;
     }
 
 }
