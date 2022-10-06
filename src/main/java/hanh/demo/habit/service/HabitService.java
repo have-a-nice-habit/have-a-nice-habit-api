@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,16 +26,17 @@ public class HabitService {
         habit.setTitle(habitRequestDto.getTitle());
         habit.setUser(habitRequestDto.getUser());
         habit.setCount(habitRequestDto.getCount());
+        habit.setEmoji(habit.getEmoji());
 
         habitRepository.save(habit);
         return habit;
     }
 
-    public List<HabitResponseDto> findAllByUser(User user) {
-        List<HabitResponseDto> habitList = habitRepository.findAllByUser(user)
-                .stream().map(HabitResponseDto::new).collect(Collectors.toList());
+    public List<HabitResponseDto> findAllByUser(User user, LocalDate date) {
+        List<HabitResponseDto> habitResponseDtoList = habitRepository.findAllByUser(user)
+                .stream().map(h -> new HabitResponseDto(h,date)).collect(Collectors.toList());
 
-        return habitList;
+        return habitResponseDtoList;
     }
 
 }

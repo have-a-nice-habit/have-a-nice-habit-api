@@ -4,11 +4,8 @@ import hanh.demo.habit.domain.Habit;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,30 +14,49 @@ public class HabitResponseDto {
 
     private Long id;
 
+    private String name;
+
+    //그 날 띄우는지 여부
+    private boolean todayDisplay;
+
+    //오늘 띄우는지 여부
     private boolean isDisplay;
 
-    // 오늘 했는지 안했는지 확인
+    // 달성 여부
     private boolean isAchieved;
+
+    private String emoji;
 
     private Integer count;
 
     @Builder
     public HabitResponseDto(
-            Habit habit
+            Habit habit,
+            LocalDate date
     ){
         this.id = habit.getId();
         this.isDisplay = habit.getIsDisplay();
+        this.name = habit.getTitle();
+        this.todayDisplay = getIsDisplay(habit.getDisplayDateList(), date);
         this.count = habit.getCount();
-        this.isAchieved = getIsAchieved(habit.getDateList());
+        this.emoji = habit.getEmoji();
+        this.isAchieved = getIsAchieved(habit.getDateList(), date);
+    }
+
+    private boolean getIsDisplay(
+            List<LocalDate> displayDateList,
+            LocalDate date
+    ){
+        return displayDateList.contains(date);
     }
 
     private boolean getIsAchieved(
-            List<String> dateList
+            List<LocalDate> dateList,
+            LocalDate date
     ){
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        String dateToStr = dateFormat.format(date);
-        return dateList.contains(dateToStr);
+        return dateList.contains(date);
     }
+
+
 
 }

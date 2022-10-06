@@ -131,35 +131,34 @@ public class HabitControllerTest {
 
         Long habitId = savedHabit.getId();
 
-        info.add("date",dateToStr);
 
         // 추가 로직
 
         //when
-        mockMvc.perform(post("/habit/"+habitId+"/add-date")
-                .params(info));
+        mockMvc.perform(post("/habit/"+habitId+"/add-date?date=2022-10-04"));
 
-        assertEquals(1, savedHabit.getDateList().size());
+        mockMvc.perform(post("/habit/"+habitId+"/add-date?date=2022-09-04"));
+
+        assertEquals(2, savedHabit.getDateList().size());
         //then
         assertThat(savedHabit.getDateList()
                 .contains(dateToStr));
 
 
-
         // 취소 로직
-        mockMvc.perform(post("/habit/"+habitId+"/add-date")
-                .params(info));
+        mockMvc.perform(post("/habit/"+habitId+"/add-date?date=2022-10-04"));
 
-        assertEquals(0, savedHabit.getDateList().size());
+        assertEquals(1, savedHabit.getDateList().size());
 
     }
 
     @Test
+    @Transactional
     void readAllHabitTest() throws Exception {
         //given
         MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
 
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String dateToStr = dateFormat.format(date);
 
@@ -181,7 +180,7 @@ public class HabitControllerTest {
         System.out.println("dateTostr = " + dateToStr);
 
         //when, then
-        MvcResult result = mockMvc.perform(get("/habit")
+        MvcResult result = mockMvc.perform(get("/habit?date=2022-09-10")
                 .params(info))
                 .andExpect(status().isOk())
                 .andDo(print())
