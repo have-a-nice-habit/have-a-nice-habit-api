@@ -62,7 +62,7 @@ public class Habit {
 
     public Habit changeStatus(LocalDate date){
 
-        this.isDisplay = !(this.isDisplay);
+        this.isDisplay = !this.isDisplay;
         if (this.isDisplay == true && !(this.displayDateList.contains(date))) {
             this.displayDateList.add(date);
         }
@@ -76,6 +76,11 @@ public class Habit {
 
     public Habit removeDate(LocalDate date){
         this.dateList.remove(date);
+        return this;
+    }
+
+    public Habit addDisplayDate(LocalDate date){
+        this.displayDateList.add(date);
         return this;
     }
 

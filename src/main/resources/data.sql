@@ -21,3 +21,5 @@ values (10, 'Povidone');
 
 insert into habit (id, user_id, count, title) values (1, 1, 1, '물 마시기');
 insert into habit (id, user_id, count, title) values (2, 2, 7, '22시 이전에 자기');
+
+insert into habit_display_date_list(habit_id, display_date_list) values(1,'2022-10-03')
