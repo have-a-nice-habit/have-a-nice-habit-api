@@ -40,9 +40,9 @@ public class Habit {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private List<LocalDate> displayDateList = new ArrayList<LocalDate>();
 
-    // 습관을 재운 날
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate sleepDate;
+    // 한 주에 몇번 수행했는지
+    @ColumnDefault("0")
+    private Integer weekCnt;
 
     // 일주일에 몇번 수행할것인지
     @Max(value = 7, message = "횟수는 최대 7번까지 설정 가능합니다.")
@@ -62,7 +62,7 @@ public class Habit {
 
     public Habit changeStatus(LocalDate date){
 
-        this.isDisplay = !(this.isDisplay);
+        this.isDisplay = !this.isDisplay;
         if (this.isDisplay == true && !(this.displayDateList.contains(date))) {
             this.displayDateList.add(date);
         }
@@ -76,6 +76,11 @@ public class Habit {
 
     public Habit removeDate(LocalDate date){
         this.dateList.remove(date);
+        return this;
+    }
+
+    public Habit addDisplayDate(LocalDate date){
+        this.displayDateList.add(date);
         return this;
     }
 
