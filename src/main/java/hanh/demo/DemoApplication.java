@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableBatchProcessing
 @SpringBootApplication
+@EnableScheduling
 public class DemoApplication {
 
 	public static void main(String[] args) {
