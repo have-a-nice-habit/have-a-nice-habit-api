@@ -36,13 +36,15 @@ public class HabitResponseDto {
             Habit habit,
             LocalDate date
     ){
+        List<LocalDate> displayDateList = habit.getDisplayDateList();
+
         this.id = habit.getId();
         this.isDisplay = habit.getIsDisplay();
         this.name = habit.getTitle();
-        this.todayDisplay = getIsDisplay(habit.getDisplayDateList(), date);
+        this.todayDisplay = getIsDisplay(displayDateList, date);
         this.count = habit.getCount();
         this.emoji = habit.getEmoji();
-        this.isAchieved = getIsAchieved(habit.getDateList(), date);
+        this.isAchieved = getIsAchieved(displayDateList, date);
         this.weekCount = habit.getWeekCount();
     }
 
