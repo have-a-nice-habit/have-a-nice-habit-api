@@ -1,4 +1,4 @@
-package hanh.demo.common.config;
+package hanh.demo.common.scheduler;
 
 import hanh.demo.common.job.HabitJobs;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +21,24 @@ import java.util.Map;
 public class BatchScheduler {
 
     private final HabitJobs habitjobs;
-
     private final JobLauncher jobLauncher;
 
-    @Scheduled(cron=" 0 33 0 * * * ")
-    public void runJob(){
+    @Scheduled(cron=" 0 0 0 * * 1 ")
+    public void rundisplayHabit(){
+
+        Map<String, JobParameter> confMap = new HashMap<>();
+        JobParameters jobParameters = new JobParameters(confMap);
+
+        try{
+            jobLauncher.run(habitjobs.resetWeekCount(), jobParameters);
+        }catch(JobExecutionAlreadyRunningException | JobInstanceAlreadyCompleteException
+        | JobParametersInvalidException | org.springframework.batch.core.repository.JobRestartException e){
+            log.error(e.getMessage());
+        }
+    }
+
+    @Scheduled(cron=" 0 0 0 * * * ")
+    public void runResetWeekCount(){
 
         Map<String, JobParameter> confMap = new HashMap<>();
         JobParameters jobParameters = new JobParameters(confMap);
@@ -33,7 +46,7 @@ public class BatchScheduler {
         try{
             jobLauncher.run(habitjobs.displayHabit(), jobParameters);
         }catch(JobExecutionAlreadyRunningException | JobInstanceAlreadyCompleteException
-        | JobParametersInvalidException | org.springframework.batch.core.repository.JobRestartException e){
+               | JobParametersInvalidException | org.springframework.batch.core.repository.JobRestartException e){
             log.error(e.getMessage());
         }
     }

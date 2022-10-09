@@ -29,7 +29,7 @@ public class HabitResponseDto {
 
     private Integer count;
 
-    private Integer weekCnt;
+    private Integer weekCount;
 
     @Builder
     public HabitResponseDto(
@@ -43,7 +43,7 @@ public class HabitResponseDto {
         this.count = habit.getCount();
         this.emoji = habit.getEmoji();
         this.isAchieved = getIsAchieved(habit.getDateList(), date);
-        this.weekCnt = habit.getWeekCnt();
+        this.weekCount = habit.getWeekCount();
     }
 
     private boolean getIsDisplay(
