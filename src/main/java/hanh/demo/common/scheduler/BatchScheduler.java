@@ -28,8 +28,6 @@ public class BatchScheduler {
     @Scheduled(cron=" 0 0 0 * * 1 ")
     public void runDisplayHabit(){
 
-        System.out.println("batch 1 쓰레드명 ="+Thread.currentThread().getName());
-
         Map<String, JobParameter> confMap = new HashMap<>();
         JobParameters jobParameters = new JobParameters(confMap);
 
@@ -44,8 +42,6 @@ public class BatchScheduler {
     @Async
     @Scheduled(cron=" 0 0 0 * * * ")
     public void runResetWeekCount(){
-
-        System.out.println("batch 2 ="+Thread.currentThread().getName());
 
         Map<String, JobParameter> confMap = new HashMap<>();
         JobParameters jobParameters = new JobParameters(confMap);
