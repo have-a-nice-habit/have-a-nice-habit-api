@@ -103,7 +103,6 @@ public class HabitJobs {
             @Override
             public Habit process(Habit habit) throws Exception {
                 if (!habit.getDisplayDateList().contains(date)){
-
                     habit.addDisplayDate(date);
                 }
                 return habit;
