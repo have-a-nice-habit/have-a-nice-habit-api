@@ -19,7 +19,7 @@ values (9, 'Varibar');
 insert into user (id, nickname)
 values (10, 'Povidone');
 
-insert into habit (id, user_id, count, title) values (1, 1, 1, '물 마시기');
+insert into habit (id, user_id, count, title, week_count) values (1, 1, 1, '물 마시기', 2);
 insert into habit (id, user_id, count, title) values (2, 2, 7, '22시 이전에 자기');
 insert into habit (id, user_id, count, title) values (3, 3, 5, '영단어 외우기');
 

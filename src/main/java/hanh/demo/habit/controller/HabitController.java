@@ -77,6 +77,7 @@ public class HabitController {
                                   @RequestParam("date")
                                   @DateTimeFormat(pattern = "yyyy-MM-dd")
                                   LocalDate date){
+
         Optional<Habit> findHabit = habitRepository.findById(habitId);
 
         if (findHabit.isPresent()){

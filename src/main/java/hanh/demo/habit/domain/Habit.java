@@ -41,8 +41,9 @@ public class Habit {
     private List<LocalDate> displayDateList = new ArrayList<LocalDate>();
 
     // 한 주에 몇번 수행했는지
+    @Column(name = "week_count")
     @ColumnDefault("0")
-    private Integer weekCnt;
+    private Integer weekCount;
 
     // 일주일에 몇번 수행할것인지
     @Max(value = 7, message = "횟수는 최대 7번까지 설정 가능합니다.")
@@ -84,4 +85,8 @@ public class Habit {
         return this;
     }
 
+    public Habit resetWeekCount() {
+        this.weekCount = 0;
+        return this;
+    }
 }
