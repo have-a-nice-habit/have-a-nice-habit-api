@@ -1,5 +1,6 @@
 package hanh.demo.common.config;
 
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -11,15 +12,26 @@ import java.util.concurrent.Executor;
 @EnableAsync
 public class AsyncConfig extends AsyncConfigurerSupport {
 
+    private static final int CORE_POOL_SIZE = 5;
+    private static final int MAX_POOL_SIZE = 10;
+    private static final int QUEUE_CAPACITY = 500; // 대기 큐의 사이즈
+    private static final String THREAD_NAME_PREFIX ="HANH-ASYNC-";
+
+    private AsyncExceptionHandler asyncExceptionHandler;
     @Override
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(5);
-        executor.setMaxPoolSize(30);
-        executor.setQueueCapacity(50);
-        executor.setThreadNamePrefix("HANH-ASYNC-");
+        executor.setCorePoolSize(CORE_POOL_SIZE);
+        executor.setMaxPoolSize(MAX_POOL_SIZE);
+        executor.setQueueCapacity(QUEUE_CAPACITY);
+        executor.setThreadNamePrefix(THREAD_NAME_PREFIX);
         executor.initialize();
         return executor;
+    }
+
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return asyncExceptionHandler;
     }
 
 }
