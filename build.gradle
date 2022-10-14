@@ -28,7 +28,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
-  ### oauth 관련
+    // oauth 관련
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
 	implementation 'org.slf4j:jcl-over-slf4j'
