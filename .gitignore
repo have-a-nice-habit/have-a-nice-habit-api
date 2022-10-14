@@ -39,3 +39,6 @@ out/
 ### oauth 관련 ###
 application-oauth.properties
 
+### Jasypt Password Key igonre ###
+/src/main/resources/jasypt-encryptor-password.txt
+
