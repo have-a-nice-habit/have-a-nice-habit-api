@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### oauth 관련 ###
+application-oauth.properties
+
