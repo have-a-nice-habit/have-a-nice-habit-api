@@ -42,3 +42,5 @@ application-oauth.properties
 ### Jasypt Password Key igonre ###
 /src/main/resources/jasypt-encryptor-password.txt
 
+.DS_Store
+
