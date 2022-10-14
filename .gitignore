@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Jasypt Password Key igonre ###
+/src/main/resources/jasypt-encryptor-password.txt
+

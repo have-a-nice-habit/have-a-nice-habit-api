@@ -18,4 +18,3 @@ public class AsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
     public void handleUncaughtException(Throwable ex, Method method, Object... params) {
         logger.error("Uncaught asynchronous exception from: " + method.getDeclaringClass().getName() + "." + method.getName(), ex);
     }
-}
