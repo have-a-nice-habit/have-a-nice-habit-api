@@ -2,9 +2,11 @@ package com.hanh.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hanh.domain.habit.Habit;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
