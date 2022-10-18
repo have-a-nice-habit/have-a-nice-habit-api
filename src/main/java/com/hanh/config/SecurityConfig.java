@@ -22,8 +22,10 @@ public class SecurityConfig {
         http.authorizeRequests().antMatchers("/**").permitAll()
                 .and().csrf().ignoringAntMatchers("/auth/**")
                 .and().headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
-                .and().formLogin().loginProcessingUrl("/auth/login")
-                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout")).invalidateHttpSession(true);
+                .and().logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout")).invalidateHttpSession(true)
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/habit/check");
         return http.build();
     }
 
@@ -34,6 +36,5 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+        return authenticationConfiguration.getAuthenticationManager();}
 }

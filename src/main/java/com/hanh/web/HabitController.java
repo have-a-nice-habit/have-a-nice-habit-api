@@ -93,4 +93,10 @@ public class HabitController {
         return ResponseEntity.status(HttpStatus.OK).body(date+"의 달성 여부가 변경되었습니다");
     }
 
+    // 로그아웃을 확인용
+    @GetMapping("/check")
+    public ResponseEntity newnew(){
+        return ResponseEntity.status(HttpStatus.OK).body("OK");
+    }
+
 }
