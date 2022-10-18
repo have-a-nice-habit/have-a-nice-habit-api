@@ -23,4 +23,24 @@ public class UserRequestDto {
 
     @NotEmpty(message = "비밀번호는 필수항목입니다.")
     private String password;
+
+    @Builder
+    public void UserRequestDto(
+            String nickname,
+            String email,
+            String password
+    ){
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
+    }
+
+    @Builder
+    public void UserRequestDto(
+            String email,
+            String password
+    ){
+        this.email = email;
+        this.password= password;
+    }
 }

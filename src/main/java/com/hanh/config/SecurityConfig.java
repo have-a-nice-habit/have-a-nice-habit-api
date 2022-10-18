@@ -13,6 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -22,8 +25,10 @@ public class SecurityConfig {
         http.authorizeRequests().antMatchers("/**").permitAll()
                 .and().csrf().ignoringAntMatchers("/auth/**")
                 .and().headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
-                .and().formLogin().loginProcessingUrl("/auth/login")
-                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout")).invalidateHttpSession(true);
+                .and().logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout")).invalidateHttpSession(true)
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/habit/check");
         return http.build();
     }
 
@@ -34,6 +39,5 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+        return authenticationConfiguration.getAuthenticationManager();}
 }
