@@ -52,11 +52,6 @@ public class UserController {
 
         authenticate(requestDto.getEmail(), requestDto.getPassword());
 
-        System.out.println("-------------------------");
-        HttpSession session = request.getSession();
-        System.out.println("session = " + session);
-        System.out.println("-------------------------");
-
         return ResponseEntity.status(HttpStatus.OK).body(userDetails);
     }
 
