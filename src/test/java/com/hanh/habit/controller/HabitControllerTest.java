@@ -90,15 +90,19 @@ public class HabitControllerTest {
     @Test
     void changeStatus() throws Exception {
 
+        long beforeTime = System.currentTimeMillis();
         //when
         Habit habit = habitRepository.findById(1L).get();
 
         Boolean temp = habit.getIsDisplay();
-
         //then
         mockMvc.perform(post("/habit/1/change-status")
                 )
                 .andExpect(status().isOk());
+
+        long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
+        long secDiffTime = (afterTime - beforeTime)/1000; //두 시간에 차 계산
+        System.out.println("시간차이(m) : "+secDiffTime);
 
         Assertions.assertNotEquals(temp, habit.getIsDisplay());
 
