@@ -20,19 +20,21 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static com.hanh.utils.ResponseEntityConstants.RESPONSE_CREATED;
+import static com.hanh.utils.ResponseEntityConstants.RESPONSE_OK;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/habit")
 public class HabitController {
-
     private final HabitService habitService;
     private final HabitRepository habitRepository;
 
     private final UserRepository userRepository;
 
     @PostMapping("{habitId}/change-status")
-    public ResponseEntity changeStatus(@PathVariable Long habitId,
-                                        @RequestParam("date")
+    public ResponseEntity<Void> changeStatus(@PathVariable Long habitId,
+                                             @RequestParam("date")
                                         @DateTimeFormat(pattern = "yyyy-MM-dd")
                                         LocalDate date
     ){
@@ -44,8 +46,7 @@ public class HabitController {
             throw new DataNotFoundException(); // exception controller 로 빼기
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body("상태를 변경했습니다.");
-
+       return RESPONSE_OK;
     }
 
     @PostMapping
@@ -53,7 +54,7 @@ public class HabitController {
 
         Habit savedHabit = habitService.createHabit(habitRequestDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedHabit);
+        return RESPONSE_CREATED;
 
     }
 
@@ -90,12 +91,12 @@ public class HabitController {
             throw new DataNotFoundException();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(date+"의 달성 여부가 변경되었습니다");
+        return RESPONSE_OK;
     }
 
-    // 로그아웃을 확인용
+    // 로그아웃 확인용
     @GetMapping("/check")
-    public ResponseEntity newnew(){
+    public ResponseEntity checkLogout(){
         return ResponseEntity.status(HttpStatus.OK).body("OK");
     }
 

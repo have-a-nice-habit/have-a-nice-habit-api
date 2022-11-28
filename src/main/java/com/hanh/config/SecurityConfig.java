@@ -20,7 +20,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeRequests().antMatchers("/**").permitAll()
-                .and().csrf().ignoringAntMatchers("/auth/**")
+                .and().csrf().ignoringAntMatchers("/**")
                 .and().headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout")).invalidateHttpSession(true)
